@@ -44,6 +44,6 @@ environment:
   PASSWORD:
     type: string
     help: The server password.
-  PRIVATE_KEY:
+  PUBLIC_KEY:
     type: string
     help: The server password.

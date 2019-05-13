@@ -2,8 +2,6 @@ package ssh
 
 import (
 	"encoding/json"
-	//"github.com/docker/docker/api/types/container"
-	//"github.com/gliderlabs/ssh"
 	"fmt"
 	result "github.com/heaptracetechnology/microservice-ssh/result"
 	"golang.org/x/crypto/ssh"
@@ -48,7 +46,6 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 	out, err := session.CombinedOutput(param.Command)
 	if err != nil {
-		fmt.Println("------3--------", err)
 		panic(err)
 	}
 
@@ -71,14 +68,12 @@ func connectToHost(user, host string) (*ssh.Client, *ssh.Session, error) {
 
 	client, err := ssh.Dial("tcp", host, sshConfig)
 	if err != nil {
-		fmt.Println("------1--------", err)
 		return nil, nil, err
 	}
 
 	session, err := client.NewSession()
 	if err != nil {
 		client.Close()
-		fmt.Println("------2--------", err)
 		return nil, nil, err
 	}
 
