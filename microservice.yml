@@ -25,7 +25,7 @@ actions:
       command:
         type: string
         in: requestBody
-        required: false
+        required: true
         help: A execute command over ssh.
     output:
       type: object
@@ -33,17 +33,17 @@ actions:
 environment:
   HOST:
     type: string
-    required: false
+    required: true
     help: The network host.
   PORT:
     type: string
-    required: false
+    required: true
     help: The port number
   USERNAME:
     type: string
-    required: false
+    required: true
     help: The server username
   PASSWORD:
     type: string
-    required: false
+    required: true
     help: The server password
