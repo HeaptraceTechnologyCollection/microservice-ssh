@@ -34,10 +34,10 @@ environment:
   HOST:
     type: string
     required: true
-    help: The network host.
+    help: The SSH host server.
   PORT:
-    type: string
-    required: true
+    type: int
+    required: false
     help: The port number
   USERNAME:
     type: string
