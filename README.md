@@ -23,7 +23,7 @@ omg build
 
 ##### SSH
 ```sh
-$ 
+$ omg run ssh -a command=<COMMANDS> -e HOST=<SSH_HOST> -e USRNAME=<SERVER_USERNAME> -e PASSWORD=<SERVER_PASSWORD>
 ```
 
 ## License

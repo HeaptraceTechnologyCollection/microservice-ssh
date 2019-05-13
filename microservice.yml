@@ -28,7 +28,7 @@ actions:
         required: true
         help: A execute command over ssh.
     output:
-      type: object
+      type: string
       contentType: application/json
 environment:
   HOST:
@@ -37,13 +37,13 @@ environment:
     help: The SSH host server.
   PORT:
     type: int
-    required: false
-    help: The port number
-  USERNAME:
+    help: The port number.
+  USRNAME:
     type: string
-    required: true
-    help: The server username
+    help: The server username.
   PASSWORD:
     type: string
-    required: true
-    help: The server password
+    help: The server password.
+  PRIVATE_KEY:
+    type: string
+    help: The server password.
