@@ -14,7 +14,7 @@ import (
 var _ = Describe("SSH", func() {
 
 	os.Setenv("HOST", "192.168.1.88:22")
-	os.Setenv("USERNAME", "admin1")
+	os.Setenv("USRNAME", "admin1")
 	os.Setenv("PASSWORD", "admin")
 
 	ssh := SSHArguments{Command: "ifconfig"}

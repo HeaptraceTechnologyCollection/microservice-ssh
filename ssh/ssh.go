@@ -2,7 +2,6 @@ package ssh
 
 import (
 	"encoding/json"
-	"fmt"
 	result "github.com/heaptracetechnology/microservice-ssh/result"
 	"golang.org/x/crypto/ssh"
 	"net/http"
@@ -20,7 +19,7 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var host = os.Getenv("HOST")
 	var port = os.Getenv("PORT")
-	var username = os.Getenv("USRNAME")
+	var username = os.Getenv("")
 	var password = os.Getenv("PASSWORD")
 	pwd = password
 
