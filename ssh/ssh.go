@@ -2,10 +2,11 @@ package ssh
 
 import (
 	"encoding/json"
-	result "github.com/heaptracetechnology/microservice-ssh/result"
-	"golang.org/x/crypto/ssh"
 	"net/http"
 	"os"
+
+	result "github.com/heaptracetechnology/microservice-ssh/result"
+	"golang.org/x/crypto/ssh"
 )
 
 type SSHArguments struct {
@@ -19,7 +20,7 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var host = os.Getenv("HOST")
 	var port = os.Getenv("PORT")
-	var username = os.Getenv("")
+	var username = os.Getenv("USRNAME")
 	var password = os.Getenv("PASSWORD")
 	pwd = password
 
