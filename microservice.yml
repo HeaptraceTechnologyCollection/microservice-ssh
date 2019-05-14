@@ -35,7 +35,6 @@ actions:
       password:
         type: string
         in: requestBody
-        required: true
         help: The server password.
     output:
       type: string
