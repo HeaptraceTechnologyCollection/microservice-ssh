@@ -38,12 +38,12 @@ environment:
   PORT:
     type: int
     help: The port number.
-  USER:
+  USER_NAME:
     type: string
     help: The server username.
   PASSWORD:
     type: string
     help: The server password.
-  PUBLIC_KEY:
+  PRIVATE_KEY:
     type: string
     help: The server password.
