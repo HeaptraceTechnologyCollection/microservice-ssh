@@ -14,7 +14,7 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 actions:
-  execute:
+  exec:
     help: Secure Shell is a cryptographic network protocol.
     http:
       port: 3000
@@ -27,6 +27,16 @@ actions:
         in: requestBody
         required: true
         help: A execute command over ssh.
+      username:
+        type: string
+        in: requestBody
+        required: true
+        help: The server username.
+      password:
+        type: string
+        in: requestBody
+        required: true
+        help: The server password.
     output:
       type: string
       contentType: application/json
@@ -38,12 +48,6 @@ environment:
   PORT:
     type: int
     help: The port number.
-  USER_NAME:
-    type: string
-    help: The server username.
-  PASSWORD:
-    type: string
-    help: The server password.
   PRIVATE_KEY:
     type: string
-    help: The server password.
+    help: The base64 data of SSH private key.

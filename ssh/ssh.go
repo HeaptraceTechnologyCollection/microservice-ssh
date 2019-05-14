@@ -9,21 +9,18 @@ import (
 )
 
 type SSHArguments struct {
-	Command string `json:"command,omitempty"`
+	Command  string `json:"command,omitempty"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
 }
 
 var pwd string
-var pkey string
 
 //SSH
 func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var host = os.Getenv("HOST")
 	var port = os.Getenv("PORT")
-	var username = os.Getenv("USER_NAME")
-	var password = os.Getenv("PASSWORD")
-
-	pwd = password
 
 	decoder := json.NewDecoder(request.Body)
 
@@ -34,6 +31,7 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	pwd = param.Password
 	var hostname string
 	if port != "" {
 		hostname = host + ":" + port
@@ -41,7 +39,7 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		hostname = host + ":22"
 	}
 
-	client, session, err := connectToHost(username, hostname)
+	client, session, err := connectToHost(param.Username, hostname)
 	if err != nil {
 		panic(err)
 	}
@@ -58,11 +56,9 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
 func connectToHost(user, host string) (*ssh.Client, *ssh.Session, error) {
 
-	pass := pwd
-
 	sshConfig := &ssh.ClientConfig{
 		User: user,
-		Auth: []ssh.AuthMethod{ssh.Password(pass)},
+		Auth: []ssh.AuthMethod{ssh.Password(pwd)},
 	}
 
 	sshConfig.HostKeyCallback = ssh.InsecureIgnoreHostKey()
