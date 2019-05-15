@@ -36,17 +36,19 @@ actions:
         type: string
         in: requestBody
         help: The server password.
+      host:
+        type: string
+        in: requestBody
+        required: true
+        help: The SSH host server.
+      port:
+        type: string
+        in: requestBody
+        help: The port number.
     output:
       type: string
       contentType: application/json
 environment:
-  HOST:
-    type: string
-    required: true
-    help: The SSH host server.
-  PORT:
-    type: int
-    help: The port number.
   PRIVATE_KEY:
     type: string
-    help: The base64 data of SSH private key.
+    help: The base64 data of SSH private key file.
