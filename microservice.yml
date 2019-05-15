@@ -15,7 +15,7 @@ info:
     url: https://opensource.org/licenses/MIT
 actions:
   exec:
-    help: Secure Shell is a cryptographic network protocol.
+    help: Execute the command on server using password or public/private keys.
     http:
       port: 3000
       method: post
