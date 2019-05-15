@@ -6,13 +6,15 @@ import (
 	result "github.com/heaptracetechnology/microservice-ssh/result"
 	"golang.org/x/crypto/ssh"
 	"net/http"
-	"os"
 )
 
 type SSHArguments struct {
-	Command  string `json:"command,omitempty"`
-	Username string `json:"username,omitempty"`
-	Password string `json:"password,omitempty"`
+	Command    string `json:"command,omitempty"`
+	Username   string `json:"username,omitempty"`
+	Password   string `json:"password,omitempty"`
+	Host       string `json:"host,omitempty"`
+	Port       string `json:"port,omitempty"`
+	PrivateKey string `json:"private_key,omitempty"`
 }
 
 type Message struct {
@@ -24,10 +26,6 @@ type Message struct {
 //SSH
 func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
-	var host = os.Getenv("HOST")
-	var port = os.Getenv("PORT")
-	var privateKey = os.Getenv("PRIVATE_KEY")
-
 	decoder := json.NewDecoder(request.Body)
 
 	var param SSHArguments
@@ -37,21 +35,26 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if param.Password != "" && privateKey != "" {
+	if param.Password != "" && param.PrivateKey != "" {
 		message := Message{"false", "Please provide either password or private key", http.StatusBadRequest}
+		bytes, _ := json.Marshal(message)
+		result.WriteJsonResponse(responseWriter, bytes, http.StatusBadRequest)
+		return
+	} else if param.Password == "" && param.PrivateKey == "" {
+		message := Message{"false", "Please provide password or private key", http.StatusBadRequest}
 		bytes, _ := json.Marshal(message)
 		result.WriteJsonResponse(responseWriter, bytes, http.StatusBadRequest)
 		return
 	}
 
 	var hostname string
-	if port != "" {
-		hostname = host + ":" + port
+	if param.Port != "" {
+		hostname = param.Host + ":" + param.Port
 	} else {
-		hostname = host + ":22"
+		hostname = param.Host + ":22"
 	}
 
-	client, session, err := connectToHost(param.Username, hostname, param.Password, privateKey)
+	client, session, err := connectToHost(param.Username, hostname, param.Password, param.PrivateKey)
 	if err != nil {
 		result.WriteErrorResponse(responseWriter, err)
 		return

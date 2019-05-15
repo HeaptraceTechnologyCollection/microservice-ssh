@@ -45,10 +45,10 @@ actions:
         type: string
         in: requestBody
         help: The port number.
+      private_key:
+        type: string
+        in: requestBody
+        help: The base64 data of SSH private key.
     output:
       type: string
       contentType: application/json
-environment:
-  PRIVATE_KEY:
-    type: string
-    help: The base64 data of SSH private key file.
