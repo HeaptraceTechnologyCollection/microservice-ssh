@@ -32,7 +32,7 @@ var _ = Describe("SSH with private key and password", func() {
 	Describe("Run command on SSH server", func() {
 		Context("SSH server", func() {
 			It("Should result http.StatusBadRequest", func() {
-				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
+				Expect(http.StatusBadRequest).To(Equal(recorder.Code))
 			})
 		})
 	})
@@ -58,7 +58,7 @@ var _ = Describe("SSH without private key and password", func() {
 	Describe("Run command on SSH server", func() {
 		Context("SSH server", func() {
 			It("Should result http.StatusBadRequest", func() {
-				Expect(recorder.Code).To(Equal(http.StatusBadRequest))
+				Expect(http.StatusBadRequest).To(Equal(recorder.Code))
 			})
 		})
 	})
@@ -84,7 +84,7 @@ var _ = Describe("SSH with password", func() {
 	Describe("Run command on SSH server", func() {
 		Context("SSH server", func() {
 			It("Should result http.StatusOK", func() {
-				Expect(recorder.Code).To(Equal(http.StatusOK))
+				Expect(http.StatusOK).To(Equal(recorder.Code))
 			})
 		})
 	})
@@ -112,7 +112,7 @@ var _ = Describe("SSH with private key", func() {
 	Describe("Run command on SSH server", func() {
 		Context("SSH server", func() {
 			It("Should result http.StatusOK", func() {
-				Expect(recorder.Code).To(Equal(http.StatusOK))
+				Expect(http.StatusOK).To(Equal(recorder.Code))
 			})
 		})
 	})
