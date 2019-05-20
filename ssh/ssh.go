@@ -6,15 +6,15 @@ import (
 	result "github.com/heaptracetechnology/microservice-ssh/result"
 	"golang.org/x/crypto/ssh"
 	"net/http"
+	"os"
 )
 
 type SSHArguments struct {
-	Command    string `json:"command,omitempty"`
-	Username   string `json:"username,omitempty"`
-	Password   string `json:"password,omitempty"`
-	Host       string `json:"host,omitempty"`
-	Port       string `json:"port,omitempty"`
-	PrivateKey string `json:"private_key,omitempty"`
+	Command  string `json:"command,omitempty"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Host     string `json:"host,omitempty"`
+	Port     string `json:"port,omitempty"`
 }
 
 type Message struct {
@@ -23,9 +23,16 @@ type Message struct {
 	StatusCode int    `json:"statuscode"`
 }
 
+type Output struct {
+	Output     string `json:"standard_output"`
+	Error      string `json:"standard_error"`
+	ReturnCode int    `json:"return_code"`
+}
+
 //SSH
 func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 
+	var privateKey = os.Getenv("PRIVATE_KEY")
 	decoder := json.NewDecoder(request.Body)
 
 	var param SSHArguments
@@ -35,12 +42,12 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if param.Password != "" && param.PrivateKey != "" {
+	if param.Password != "" && privateKey != "" {
 		message := Message{"false", "Please provide either password or private key", http.StatusBadRequest}
 		bytes, _ := json.Marshal(message)
 		result.WriteJsonResponse(responseWriter, bytes, http.StatusBadRequest)
 		return
-	} else if param.Password == "" && param.PrivateKey == "" {
+	} else if param.Password == "" && privateKey == "" {
 		message := Message{"false", "Please provide password or private key", http.StatusBadRequest}
 		bytes, _ := json.Marshal(message)
 		result.WriteJsonResponse(responseWriter, bytes, http.StatusBadRequest)
@@ -54,7 +61,7 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		hostname = param.Host + ":22"
 	}
 
-	client, session, err := connectToHost(param.Username, hostname, param.Password, param.PrivateKey)
+	client, session, err := connectToHost(param.Username, hostname, param.Password, privateKey)
 	if err != nil {
 		result.WriteErrorResponse(responseWriter, err)
 		return
@@ -65,8 +72,12 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	bytes, _ := json.Marshal(string(out))
+	message := Output{string(out), "", http.StatusOK}
+	bytes, _ := json.Marshal(message)
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
+
+	// bytes, _ := json.Marshal(string(out))
+	// result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 	client.Close()
 
 }

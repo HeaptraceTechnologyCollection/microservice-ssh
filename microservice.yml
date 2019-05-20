@@ -45,10 +45,20 @@ actions:
         type: string
         in: requestBody
         help: The port number.
-      private_key:
-        type: string
-        in: requestBody
-        help: The base64 data of SSH private key.
     output:
-      type: string
+      type: object
       contentType: application/json
+      properties:
+        standard_output:
+          help: Returns output of command executed on server.
+          type: string
+        standard_error:
+          help: The error if any occurred.
+          type: string
+        return_code:
+          help: Http status code.
+          type: int
+environment:
+  PRIVATE_KEY:
+    type: string
+    help: The base64 data of SSH private key.
