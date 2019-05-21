@@ -23,7 +23,7 @@ omg build
 
 ##### SSH
 ```sh
-$ omg run exec -a command=<COMMAND> -a username=<SERVER_USERNAME> -a password=<SERVER_PASSWORD> -a host=<SSH_HOST> -a port=<PORT_NUMBER> -a private_key=<PRIVATE_KEY_FILE_BASE64_DATA>
+$ omg run exec -a command=<COMMAND> -a username=<SERVER_USERNAME> -a password=<SERVER_PASSWORD> -a host=<SSH_HOST> -a port=<PORT_NUMBER> -e PRIVATE_KEY=<PRIVATE_KEY_FILE_BASE64_DATA>
 ```
 
 ## License

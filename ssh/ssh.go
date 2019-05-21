@@ -76,8 +76,6 @@ func SSH(responseWriter http.ResponseWriter, request *http.Request) {
 	bytes, _ := json.Marshal(message)
 	result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 
-	// bytes, _ := json.Marshal(string(out))
-	// result.WriteJsonResponse(responseWriter, bytes, http.StatusOK)
 	client.Close()
 
 }
